@@ -1,6 +1,7 @@
 package com.petcommerce.petcommerce.venda;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.petcommerce.petcommerce.cliente.Cliente;
 import com.petcommerce.petcommerce.vendaProduto.VendaProduto;
 import lombok.AllArgsConstructor;
@@ -22,8 +23,9 @@ public class Venda {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "venda")
-    List<VendaProduto> produtos;
+    public List<VendaProduto> produtos;
 
     @ManyToOne
     @JoinColumn(name = "clienteId", nullable = false)

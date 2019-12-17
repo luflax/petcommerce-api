@@ -1,7 +1,9 @@
 package com.petcommerce.petcommerce.cliente;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.petcommerce.petcommerce.endereco.Endereco;
 import com.petcommerce.petcommerce.telefone.Telefone;
+import com.petcommerce.petcommerce.usuario.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,29 +18,17 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cliente {
+public class Cliente extends Usuario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long id;
+    private String cpf;
 
-    public String primeiroNome;
-
-    public String ultimoNome;
-
-    public String cpf;
-
+    @JsonManagedReference
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    public List<Endereco> enderecos;
+    private List<Endereco> enderecos;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    public List<Telefone> telefones;
+    private List<Telefone> telefones;
 
-    public Character sexo;
-
-    public LocalDate dataNascimento;
-
-    public String email;
-
-    public String senhaHash;
+    private String sexo;
 }

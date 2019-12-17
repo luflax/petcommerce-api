@@ -1,5 +1,6 @@
 package com.petcommerce.petcommerce.endereco;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.petcommerce.petcommerce.cliente.Cliente;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,6 +36,7 @@ public class Endereco {
 
     public String cep;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "clienteId", nullable = false)
     public Cliente cliente;

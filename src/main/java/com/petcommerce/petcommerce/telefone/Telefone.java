@@ -1,5 +1,6 @@
 package com.petcommerce.petcommerce.telefone;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.petcommerce.petcommerce.cliente.Cliente;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class Telefone {
 
     private TipoTelefone tipo;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "clienteId", nullable = false)
     public Cliente cliente;

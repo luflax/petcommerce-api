@@ -25,6 +25,11 @@ public class VendaController {
 
     @PostMapping
     public Venda save(@RequestBody Venda venda){
+
+        /*venda.getProdutos().forEach(produto -> {
+            produto.setVenda(venda);
+        });
+        return vendaService.save(venda.setDataPedido(LocalDate.now()));*/
         Venda novaVenda = vendaService.save(venda.setDataPedido(LocalDate.now()));
         venda.produtos.forEach(produto -> {
             if(produtoService.buy(produto.getProduto().getId(), produto.getQuantidade()) > 0)

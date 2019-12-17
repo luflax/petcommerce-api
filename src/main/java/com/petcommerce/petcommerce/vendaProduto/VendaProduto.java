@@ -1,5 +1,6 @@
 package com.petcommerce.petcommerce.vendaProduto;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.petcommerce.petcommerce.cliente.Cliente;
 import com.petcommerce.petcommerce.produto.Produto;
 import com.petcommerce.petcommerce.venda.Venda;
@@ -20,6 +21,7 @@ public class VendaProduto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "vendaId", nullable = false)
     public Venda venda;
