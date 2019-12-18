@@ -17,7 +17,7 @@ public class TokenService {
     public String gerarToken(Usuario usuario){
         return Jwts.builder()
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setSubject(usuario.getEmail())
+                .setSubject(usuario.getId().toString())
                 .setExpiration(new Date(System.currentTimeMillis() + tempoExpiracao))
                 .signWith(SignatureAlgorithm.HS256, chave)
                 .compact();
@@ -25,9 +25,13 @@ public class TokenService {
     }
 
     public Claims decodificarToken(String token){
-        return Jwts.parser()
-                .setSigningKey(chave)
-                .parseClaimsJws(token)
-                .getBody();
+        try{
+            return Jwts.parser()
+                    .setSigningKey(chave)
+                    .parseClaimsJws(token)
+                    .getBody();
+        }catch (Exception e){
+            throw e;
+        }
     }
 }

@@ -20,6 +20,9 @@ import java.util.List;
 @AllArgsConstructor
 public class Cliente extends Usuario {
 
+    public Cliente(Long id){
+        setId(id);
+    }
     private String cpf;
 
     @JsonManagedReference

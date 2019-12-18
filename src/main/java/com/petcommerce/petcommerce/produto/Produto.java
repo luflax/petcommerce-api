@@ -1,12 +1,9 @@
 package com.petcommerce.petcommerce.produto;
 
-import com.petcommerce.petcommerce.remedio.RemedioDto;
+import com.petcommerce.petcommerce.produtoCategoria.ProdutoCategoria;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter
@@ -33,6 +30,10 @@ public class Produto implements Serializable {
 
     private Integer quantity;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "categoriaId")
+    private ProdutoCategoria category;
+
     public Produto(ProdutoDto produto){
         setName(produto.getName());
         setBrand(produto.getBrand());
@@ -41,6 +42,7 @@ public class Produto implements Serializable {
         setId(produto.getId());
         setDiscount(produto.getDiscount());
         setQuantity(produto.getQuantity());
+        setCategory(produto.getCategory());
     }
 
     public Double priceWithDiscount(){

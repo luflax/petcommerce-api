@@ -30,4 +30,8 @@ public class Usuario implements Serializable {
     private String senhaHash;
 
     private String token;
+
+    public void setId(Long id){
+        this.id = id;
+    }
 }

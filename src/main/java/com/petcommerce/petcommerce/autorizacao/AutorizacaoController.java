@@ -1,6 +1,9 @@
 package com.petcommerce.petcommerce.autorizacao;
 
+import com.petcommerce.petcommerce.admin.AdminService;
 import com.petcommerce.petcommerce.cliente.Cliente;
+import com.petcommerce.petcommerce.usuario.Usuario;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,19 +15,17 @@ import javax.xml.ws.Response;
 public class AutorizacaoController {
 
     private final AutorizacaoService autorizacaoService;
-    public AutorizacaoController(AutorizacaoService autorizacaoService){
-        this.autorizacaoService = autorizacaoService;
-    }
+    private final AdminService adminService;
 
-    @PostMapping("/cadastrar")
-    public Cliente cadastrar(@RequestBody Cliente cliente){
-        return autorizacaoService.cadastrar(cliente);
+    @Autowired
+    public AutorizacaoController(AutorizacaoService autorizacaoService, AdminService adminService){
+        this.autorizacaoService = autorizacaoService;
+        this.adminService = adminService;
     }
 
     @PostMapping("/logar")
-    public ResponseEntity<Cliente> logar(@RequestBody Cliente cliente, @RequestHeader String Authorization){
-        Cliente clienteLogado = autorizacaoService.logar(cliente, Authorization);
-
+    public ResponseEntity<Usuario> logar(@RequestBody Usuario usuario, @RequestHeader(required = false) String Authorization){
+        Usuario clienteLogado = autorizacaoService.logar(usuario, Authorization);
         return clienteLogado != null ?
                 new ResponseEntity<>(clienteLogado, HttpStatus.ACCEPTED) :
                 new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);

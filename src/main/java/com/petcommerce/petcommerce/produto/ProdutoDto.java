@@ -1,5 +1,6 @@
 package com.petcommerce.petcommerce.produto;
 
+import com.petcommerce.petcommerce.produtoCategoria.ProdutoCategoria;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -29,6 +30,8 @@ public class ProdutoDto {
 
     private Integer quantity;
 
+    private ProdutoCategoria category;
+
     public ProdutoDto(Produto produto){
         setName(produto.getName());
         setBrand(produto.getBrand());
@@ -37,6 +40,7 @@ public class ProdutoDto {
         setId(produto.getId());
         setDiscount(produto.getDiscount());
         setQuantity(produto.getQuantity());
+        setCategory(produto.getCategory());
     }
 
     public ProdutoDto setPhotos(List<String> photos) {
