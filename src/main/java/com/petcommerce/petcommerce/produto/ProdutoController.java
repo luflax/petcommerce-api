@@ -32,18 +32,12 @@ public class ProdutoController {
 
     @GetMapping
     public ResponseEntity<List<ProdutoDto>> findAll(){
-        List<ProdutoDto> productsWithPhotos = new ArrayList<>();
-        produtoService.findAll().forEach(produto -> {
-            productsWithPhotos.add(
-                    new ProdutoDto(produto).setPhotos(
-                            fotoProdutoService.listAllByProductId(produto.getId())
-                                    .stream()
-                                    .map(FotoProduto::getPath).collect(Collectors.toList())
-                    )
+        return new ResponseEntity<>(produtoService.findAll(), HttpStatus.OK);
+    }
 
-            );
-        });
-        return new ResponseEntity<>(productsWithPhotos, HttpStatus.OK);
+    @GetMapping("/categoria/{idCategoria}")
+    public ResponseEntity<List<ProdutoDto>> findAllByCategory(@PathVariable("idCategoria") Long idCategoria){
+        return new ResponseEntity<>(produtoService.findAllByCategory(idCategoria), HttpStatus.OK);
     }
 
     @PostMapping

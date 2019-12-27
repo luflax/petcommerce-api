@@ -1,22 +1,32 @@
 package com.petcommerce.petcommerce.produto;
 
+import com.petcommerce.petcommerce.fotoProduto.FotoProduto;
+import com.petcommerce.petcommerce.fotoProduto.FotoProdutoService;
+import com.petcommerce.petcommerce.produtoCategoria.ProdutoCategoria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
 
-    private ProdutoRepository produtoRepository;
+    private final ProdutoRepository produtoRepository;
+    private final FotoProdutoService fotoProdutoService;
 
     @Autowired
-    public ProdutoService(ProdutoRepository produtoRepository) {
+    public ProdutoService(ProdutoRepository produtoRepository, FotoProdutoService fotoProdutoService) {
         this.produtoRepository = produtoRepository;
+        this.fotoProdutoService = fotoProdutoService;
     }
 
-    public List<Produto> findAll(){
-        return produtoRepository.findAll();
+    List<ProdutoDto> findAll(){
+        return addImagesToProdutoList(produtoRepository.findAll());
+    }
+
+    List<ProdutoDto> findAllByCategory(Long idCategory){
+        return addImagesToProdutoList(produtoRepository.findAllByCategory(ProdutoCategoria.builder().id(idCategory).build()));
     }
 
     public Produto findById(Long id){
@@ -29,5 +39,20 @@ public class ProdutoService {
 
     public Integer buy(Long produtoId, Integer quantity){
         return produtoRepository.reduceProductQuantity(produtoId, quantity);
+    }
+
+    private List<ProdutoDto> addImagesToProdutoList(List<Produto> produtos){
+        List<ProdutoDto> productsWithPhotos = new ArrayList<>();
+        produtos.forEach(produto -> {
+            productsWithPhotos.add(
+                    new ProdutoDto(produto).setPhotos(
+                            fotoProdutoService.listAllByProductId(produto.getId())
+                                    .stream()
+                                    .map(FotoProduto::getPath).collect(Collectors.toList())
+                    )
+
+            );
+        });
+        return productsWithPhotos;
     }
 }
