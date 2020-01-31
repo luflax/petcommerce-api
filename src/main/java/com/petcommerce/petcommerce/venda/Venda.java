@@ -3,6 +3,8 @@ package com.petcommerce.petcommerce.venda;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.petcommerce.petcommerce.cliente.Cliente;
+import com.petcommerce.petcommerce.endereco.Endereco;
+import com.petcommerce.petcommerce.frete.FreteTipo;
 import com.petcommerce.petcommerce.vendaProduto.VendaProduto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +39,15 @@ public class Venda {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dataEntrega;
 
+    @ManyToOne
+    @JoinColumn(name = "enderecoId", nullable = false)
+    private Endereco endereco;
+
     private String status;
+
+    private Double valorFrete;
+
+    private FreteTipo tipoFrete;
 
     public Double valorTotal(){
         return produtos.stream().map(VendaProduto::getPreco).reduce(0.0, (a, b) -> a + b);

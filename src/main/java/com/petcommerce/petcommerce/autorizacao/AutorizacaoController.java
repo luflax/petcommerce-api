@@ -1,14 +1,14 @@
 package com.petcommerce.petcommerce.autorizacao;
 
 import com.petcommerce.petcommerce.admin.AdminService;
-import com.petcommerce.petcommerce.cliente.Cliente;
+import com.petcommerce.petcommerce.frete.FreteService;
 import com.petcommerce.petcommerce.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "autorizacao", produces = {"application/json"})
@@ -16,11 +16,13 @@ public class AutorizacaoController {
 
     private final AutorizacaoService autorizacaoService;
     private final AdminService adminService;
+    private final FreteService freteService;
 
     @Autowired
-    public AutorizacaoController(AutorizacaoService autorizacaoService, AdminService adminService){
+    public AutorizacaoController(AutorizacaoService autorizacaoService, AdminService adminService, FreteService freteService){
         this.autorizacaoService = autorizacaoService;
         this.adminService = adminService;
+        this.freteService = freteService;
     }
 
     @PostMapping("/logar")

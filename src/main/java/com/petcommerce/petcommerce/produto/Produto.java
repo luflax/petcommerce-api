@@ -34,6 +34,8 @@ public class Produto implements Serializable {
     @JoinColumn(name = "categoriaId")
     private ProdutoCategoria category;
 
+    private Double weight;
+
     public Produto(ProdutoDto produto){
         setName(produto.getName());
         setBrand(produto.getBrand());
@@ -43,6 +45,7 @@ public class Produto implements Serializable {
         setDiscount(produto.getDiscount());
         setQuantity(produto.getQuantity());
         setCategory(produto.getCategory());
+        setWeight(produto.getWeight());
     }
 
     public Double priceWithDiscount(){

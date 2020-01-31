@@ -32,6 +32,8 @@ public class ProdutoDto {
 
     private ProdutoCategoria category;
 
+    private Double weight;
+
     public ProdutoDto(Produto produto){
         setName(produto.getName());
         setBrand(produto.getBrand());
@@ -41,6 +43,7 @@ public class ProdutoDto {
         setDiscount(produto.getDiscount());
         setQuantity(produto.getQuantity());
         setCategory(produto.getCategory());
+        setWeight(produto.getWeight());
     }
 
     public ProdutoDto setPhotos(List<String> photos) {
